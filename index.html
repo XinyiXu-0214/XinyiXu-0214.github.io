@@ -1,0 +1,433 @@
+Index · HTML
+Copy
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Xinyi Xu — Personal Homepage</title>
+  <meta name="description" content="Personal homepage of Xinyi Xu, undergraduate student at Northeastern University." />
+ 
+  <style>
+    /* ============ design tokens ============ */
+    :root {
+      --bg: #ffffff;
+      --text: #1f2937;
+      --text-soft: #4b5563;
+      --muted: #9ca3af;
+      --rule: #e5e7eb;
+      --rule-soft: #f3f4f6;
+ 
+      --blue: #2563eb;
+      --blue-soft: #eff6ff;
+      --amber: #d97706;
+      --amber-soft: #fef3c7;
+      --green: #059669;
+      --green-soft: #d1fae5;
+      --rose: #e11d48;
+      --rose-soft: #ffe4e6;
+      --violet: #7c3aed;
+      --violet-soft: #ede9fe;
+      --slate: #475569;
+      --slate-soft: #f1f5f9;
+    }
+ 
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      font-size: 15px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+ 
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+ 
+    /* ============ top nav ============ */
+    nav.top {
+      position: sticky;
+      top: 0;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: saturate(180%) blur(12px);
+      -webkit-backdrop-filter: saturate(180%) blur(12px);
+      border-bottom: 1px solid var(--rule);
+      z-index: 50;
+    }
+    nav.top .inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 14px 32px;
+      display: flex;
+      gap: 28px;
+      align-items: center;
+      font-size: 14px;
+    }
+    nav.top a {
+      color: var(--text-soft);
+      font-weight: 500;
+      padding: 4px 0;
+      border-bottom: 2px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    nav.top a:hover {
+      color: var(--text);
+      text-decoration: none;
+    }
+    nav.top a.active {
+      color: var(--text);
+      border-bottom-color: var(--blue);
+    }
+ 
+    /* ============ layout ============ */
+    .layout {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 48px 32px 80px;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 56px;
+      align-items: start;
+    }
+ 
+    /* ============ sidebar ============ */
+    aside.sidebar {
+      position: sticky;
+      top: 88px;
+    }
+    .avatar {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #fde68a 0%, #fbcfe8 50%, #c7d2fe 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Georgia, serif;
+      font-size: 72px;
+      color: rgba(255,255,255,0.92);
+      letter-spacing: -0.02em;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06);
+      /* TIP: replace this div with: <img class="avatar" src="your-photo.jpg" /> */
+    }
+    .name {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      letter-spacing: -0.01em;
+    }
+    .role {
+      color: var(--text-soft);
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+    .sidebar-list {
+      list-style: none;
+      font-size: 14px;
+    }
+    .sidebar-list li {
+      padding: 5px 0;
+      color: var(--text-soft);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sidebar-list li .ico { font-size: 14px; width: 16px; display: inline-flex; justify-content: center; }
+    .sidebar-list a { color: var(--text-soft); }
+    .sidebar-list a:hover { color: var(--blue); }
+ 
+    /* ============ main ============ */
+    main { min-width: 0; }
+ 
+    .intro p {
+      margin-bottom: 14px;
+      color: var(--text);
+      font-size: 15.5px;
+    }
+    .intro em { font-style: italic; color: var(--text); font-weight: 500; }
+ 
+    /* ============ section ============ */
+    section { margin-top: 48px; }
+    h2 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 18px;
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    h2 .emoji { font-size: 22px; }
+ 
+    /* ============ news ============ */
+    .news {
+      list-style: none;
+      border-left: 2px solid var(--rule-soft);
+      padding-left: 22px;
+    }
+    .news li {
+      position: relative;
+      padding: 7px 0;
+      font-size: 14.5px;
+      color: var(--text);
+    }
+    .news li::before {
+      content: "";
+      position: absolute;
+      left: -27px;
+      top: 16px;
+      width: 8px;
+      height: 8px;
+      background: var(--amber);
+      border-radius: 50%;
+      border: 2px solid #fff;
+    }
+    .news .date {
+      display: inline-block;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+      font-size: 13px;
+      margin-right: 10px;
+      min-width: 64px;
+    }
+ 
+    /* ============ venue badges ============ */
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+    .badge.arxiv  { background: var(--slate-soft); color: var(--slate); }
+    .badge.cvpr   { background: var(--blue-soft);   color: var(--blue); }
+    .badge.iclr   { background: var(--violet-soft); color: var(--violet); }
+    .badge.icml   { background: var(--rose-soft);   color: var(--rose); }
+    .badge.neurips{ background: var(--green-soft);  color: var(--green); }
+    .badge.iccv   { background: var(--amber-soft);  color: var(--amber); }
+ 
+    /* ============ publication ============ */
+    .pub {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--rule-soft);
+    }
+    .pub:last-child { border-bottom: none; }
+    .pub .title {
+      font-size: 15.5px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
+      line-height: 1.4;
+    }
+    .pub .title a { color: var(--text); }
+    .pub .title a:hover { color: var(--blue); }
+    .pub .authors {
+      font-size: 14px;
+      color: var(--text-soft);
+      margin-bottom: 6px;
+      line-height: 1.55;
+    }
+    .pub .authors .me {
+      color: var(--text);
+      font-weight: 600;
+      border-bottom: 1.5px solid var(--amber);
+    }
+    .pub .note {
+      font-size: 12.5px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .pub .meta {
+      font-size: 13.5px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 4px 12px;
+    }
+    .pub .meta a { font-size: 13px; color: var(--blue); font-weight: 500; }
+ 
+    /* ============ education list ============ */
+    .edu { list-style: none; }
+    .edu li {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 18px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--rule-soft);
+      font-size: 14.5px;
+    }
+    .edu li:last-child { border-bottom: none; }
+    .edu .when { color: var(--muted); font-variant-numeric: tabular-nums; font-size: 13.5px; padding-top: 2px; }
+    .edu .what strong { font-weight: 600; }
+    .edu .what .where { color: var(--text-soft); display: block; font-size: 14px; }
+ 
+    /* ============ footer ============ */
+    footer {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 32px 32px 48px;
+      border-top: 1px solid var(--rule);
+      color: var(--muted);
+      font-size: 13px;
+      display: flex;
+      justify-content: space-between;
+    }
+ 
+    /* ============ responsive ============ */
+    @media (max-width: 820px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding: 32px 24px 64px;
+      }
+      aside.sidebar {
+        position: static;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .avatar { width: 140px; height: 140px; font-size: 52px; }
+      nav.top .inner { padding: 12px 24px; gap: 18px; overflow-x: auto; }
+      nav.top .inner::-webkit-scrollbar { display: none; }
+      .edu li { grid-template-columns: 90px 1fr; gap: 12px; }
+      footer { padding: 24px; flex-direction: column; gap: 6px; }
+    }
+  </style>
+</head>
+<body>
+ 
+  <!-- ============ top nav ============ -->
+  <nav class="top">
+    <div class="inner">
+      <a href="#home" class="active">Homepage</a>
+      <a href="#news">News</a>
+      <a href="#publication">Publication</a>
+      <a href="#education">Education</a>
+    </div>
+  </nav>
+ 
+  <div class="layout" id="home">
+ 
+    <!-- ============ sidebar ============ -->
+    <aside class="sidebar">
+      <!-- TIP: swap this div for: <img class="avatar" src="photo.jpg" alt="Xinyi Xu" /> -->
+      <div class="avatar">X</div>
+ 
+      <div class="name">Xinyi Xu</div>
+      <div class="role">Undergraduate at Northeastern University</div>
+ 
+      <ul class="sidebar-list">
+        <li><span class="ico">📍</span> Boston, MA, USA</li>
+        <li><span class="ico">✉️</span> <a href="mailto:xu.xinyi5@northeastern.edu">xu.xinyi5@northeastern.edu</a></li>
+      </ul>
+    </aside>
+ 
+    <!-- ============ main ============ -->
+    <main>
+      <div class="intro">
+        <p>
+          I am a third-year undergraduate student at
+          <a href="https://www.northeastern.edu">Northeastern University</a>,
+          working in the
+          <a href="https://www.khoury.northeastern.edu/home/lsw/grail.html">Generalizable Robotics and Artificial Intelligence Laboratory (GRAIL)</a>,
+          advised by
+          <a href="https://www.khoury.northeastern.edu/people/lawson-wong/">Prof. Lawson L.S. Wong</a>
+          and mentored by Yu Qi (PhD student).
+        </p>
+        <p>
+          My research interests center on <em>Robot Learning</em>,
+          <em>Generalizable Manipulation</em>, and
+          <em>Multi-modal Learning</em>.
+        </p>
+      </div>
+ 
+      <!-- ============ news ============ -->
+      <section id="news">
+        <h2><span class="emoji">🔥</span> News</h2>
+        <ul class="news">
+          <li>
+            <span class="date">2026.03</span>
+            🔥 Released
+            <a href="https://arxiv.org/abs/2603.20194">MME-CoF-Pro</a>,
+            assessing reasoning coherence of video generative models.
+          </li>
+        </ul>
+      </section>
+ 
+      <!-- ============ publication ============ -->
+      <section id="publication">
+        <h2><span class="emoji">📝</span> Publication</h2>
+ 
+        <div class="pub">
+          <div class="title">
+            <a href="https://arxiv.org/abs/2603.20194">
+              MME-CoF-Pro: Evaluating Reasoning Coherence in Video Generative Models with Text and Visual Hints
+            </a>
+          </div>
+          <div class="authors">
+            Yu Qi*, <span class="me">Xinyi Xu*</span>, Ziyu Guo*, Siyuan Ma*, Renrui Zhang*,
+            Xinyan Chen, Ruichuan An, Ruofan Xing, Jiayi Zhang, Haojie Huang,
+            Pheng-Ann Heng, Jonathan Tremblay, Lawson L.S. Wong
+          </div>
+          <div class="note">* equal contribution</div>
+          <div class="meta">
+            <span class="badge arxiv">arXiv 2026</span>
+            <span>·</span>
+            <a href="https://arxiv.org/abs/2603.20194">PDF</a>
+            <a href="https://github.com/yqi19/MME-CoF-Pro">Code</a>
+            <a href="https://video-reasoning-coherence.github.io/">Webpage</a>
+            <a href="https://huggingface.co/datasets/yqi19/mme-cof-pro">Benchmark</a>
+          </div>
+        </div>
+      </section>
+ 
+      <!-- ============ education ============ -->
+      <section id="education">
+        <h2><span class="emoji">🎓</span> Education</h2>
+        <ul class="edu">
+          <li>
+            <span class="when">2023 — Now</span>
+            <span class="what">
+              <strong>Undergraduate Student</strong>
+              <span class="where">Northeastern University, Boston, MA</span>
+            </span>
+          </li>
+        </ul>
+      </section>
+    </main>
+  </div>
+ 
+  <footer>
+    <div>© 2026 Xinyi Xu</div>
+    <div>Last updated May 2026</div>
+  </footer>
+ 
+  <script>
+    // simple nav highlight on scroll
+    const sections = ['home','news','publication','education'];
+    const links = document.querySelectorAll('nav.top a');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const id = e.target.id;
+          links.forEach(a => {
+            a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+          });
+        }
+      });
+    }, { rootMargin: '-40% 0px -50% 0px' });
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) io.observe(el);
+    });
+  </script>
+</body>
+</html>
